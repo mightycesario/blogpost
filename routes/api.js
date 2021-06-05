@@ -23,14 +23,11 @@ router.get("/", (req, res) => {
 })
 
 
-// router.get("/pizza", (req, res) => {
-//   const data = {
-//     first: "Laura",
-//     last: "Cardello"
-//   }
-
-//   res.json(data)
-
-// })
+router.post("/save", (req, res) => {
+  console.log("reqbody ===>",req.body);
+  res.json({
+    mgs: "We received your data"
+  })
+})
 
 module.exports = router

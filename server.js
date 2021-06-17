@@ -3,14 +3,16 @@ const express = require("express")
 const mongoose = require("mongoose")
 const morgan = require("morgan")
 const path = require("path")
-const routes = require("./routes/api")
+const routes = require("./routes/api")  
+require("dotenv").config()  
 
 const app = express()
 const PORT = process.env.PORT || 8080
 
-MONGODB_URI = "mongodb+srv://admin:adminadmin1@cluster0.wrlm7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
-mongoose.connect(MONGODB_URI, {
+//// MONGOOSE CONNECT FUNCTIONS AND LISTENERS ////
+
+mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
   useNewUrlParser: true
 })
@@ -20,8 +22,13 @@ mongoose.connection.on("connected", () => {
   console.log("Mongoose is connected.");
 })
 
+//// MIDDLEWARE ////
 
-
+// data parsing
+app.use(express.json())
+app.use(express.urlencoded({extended:false}))
+ 
+// HTTP request logger
 app.use(morgan("tiny"))
 app.use("/api", routes)
 

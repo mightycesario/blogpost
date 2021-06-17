@@ -4,30 +4,40 @@ const BlogPost = require("../models/blogPost")
 
 
 
-// Routes
-router.get("/", (req, res) => {
-  const data = {
-    first: "Cesario",
-    last: "Menodza"
-  }
+//// ROUTES ////
 
+// GET
+router.get("/", (req, res) => {
+
+  console.log("api.js > router.get > yes");
   BlogPost.find({})
     .then((data) => {
-      console.log("data ===>", data)
+      // console.log("api.js > router.get", data);
+      res.json(data)
     })
     .catch((error) => {
       console.log("error ===>", error)
     })
-
-  res.json(data)
 })
 
 
+// POST
 router.post("/save", (req, res) => {
-  console.log("reqbody ===>",req.body);
-  res.json({
-    mgs: "We received your data"
+
+  const data = req.body
+  console.log("req.body ===>", req.body)
+
+  // birth a new instance of the newBlogPost model
+  const newBlogPost = new BlogPost(data)
+
+  newBlogPost.save(error => {
+    if(error) {
+      res.status(500).json({ msg: "Sorry there was an error" })
+    } else {
+      res.json({ msg: "Your data has been saved" })
+    }
   })
+  
 })
 
 module.exports = router

@@ -11,7 +11,7 @@ const BlogPostSchema = new Schema({
   }
 })
 
-// Model
+// Model 
 const BlogPost = mongoose.model("BlogPost", BlogPostSchema) 
 
 module.exports = BlogPost
